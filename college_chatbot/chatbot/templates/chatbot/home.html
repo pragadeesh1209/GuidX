@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GuidX · Career Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --teal-dk:#116466;--teal-md:#1a7a7c;--teal-lt:#22959a;
+            --sand:#D9B08C;--sand-lt:#FFCB9A;--mint:#D1E8E2;--mint-dk:#a8d5cc;
+            --bg:#1b2724;--surface:#222e2b;--surface2:#2a3835;
+            --border:rgba(17,100,102,0.4);--text:#D1E8E2;--text2:#9bbfb9;--text3:#5f8a84;
+            --glow:rgba(17,100,102,0.45);--glow-sand:rgba(255,203,154,0.2);
+        }
+        *{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased;}
+        html{scroll-behavior:smooth;}
+        body{font-family:"Space Grotesk",system-ui,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+        body::before{content:"";position:fixed;inset:0;background-image:linear-gradient(rgba(17,100,102,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(17,100,102,0.05) 1px,transparent 1px);background-size:44px 44px;z-index:0;pointer-events:none;}
+        .blob{position:fixed;border-radius:50%;z-index:0;pointer-events:none;}
+        .blob-1{width:600px;height:600px;background:radial-gradient(circle,rgba(17,100,102,0.18) 0%,transparent 70%);top:-200px;right:-200px;}
+        .blob-2{width:400px;height:400px;background:radial-gradient(circle,rgba(217,176,140,0.1) 0%,transparent 70%);bottom:-100px;left:-100px;}
+
+        nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;background:rgba(27,39,36,0.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+        .nav-brand{display:flex;align-items:center;gap:10px;}
+        .nav-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--teal-dk),var(--teal-lt));border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:"Orbitron",sans-serif;font-size:14px;font-weight:900;color:var(--mint);}
+        .nav-name{font-family:"Orbitron",sans-serif;font-size:1.1rem;font-weight:900;color:var(--mint);}
+        .nav-name .x{color:var(--sand-lt);}
+        .nav-links{display:flex;align-items:center;gap:12px;}
+        .nav-link{padding:8px 18px;border-radius:8px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:all 0.2s;color:var(--text2);border:1px solid transparent;}
+        .nav-link:hover{color:var(--mint);border-color:var(--border);}
+        .nav-link.primary{background:linear-gradient(135deg,var(--teal-dk),var(--teal-lt));color:var(--mint);border:none;box-shadow:0 4px 14px var(--glow);}
+        .nav-link.primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px var(--glow);}
+
+        section{position:relative;z-index:1;}
+
+        /* HERO */
+        .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 40px 80px;}
+        .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(17,100,102,0.2);border:1px solid rgba(17,100,102,0.5);border-radius:20px;padding:6px 16px;margin-bottom:28px;}
+        .hero-badge-dot{width:6px;height:6px;background:var(--sand-lt);border-radius:50%;box-shadow:0 0 8px var(--sand-lt);animation:blink 2s infinite;}
+        @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+        .hero-badge-text{font-size:0.72rem;font-weight:700;color:var(--sand);letter-spacing:0.12em;text-transform:uppercase;}
+        .hero-brand{display:flex;align-items:center;justify-content:center;gap:18px;margin-bottom:20px;}
+        .hero-icon{width:80px;height:80px;background:linear-gradient(135deg,var(--teal-dk),var(--teal-lt));border-radius:20px;display:flex;align-items:center;justify-content:center;font-family:"Orbitron",sans-serif;font-size:30px;font-weight:900;color:var(--mint);box-shadow:0 0 40px var(--glow);}
+        .hero-name{font-family:"Orbitron",sans-serif;font-size:3.5rem;font-weight:900;color:var(--mint);letter-spacing:0.04em;}
+        .hero-name .x{color:var(--sand-lt);text-shadow:0 0 24px var(--glow-sand);}
+        .hero-tagline{font-family:"Orbitron",sans-serif;font-size:0.9rem;color:var(--sand);letter-spacing:0.3em;text-transform:uppercase;margin-bottom:20px;}
+        .hero-desc{font-size:1.1rem;color:var(--text2);line-height:1.7;max-width:640px;margin-bottom:40px;}
+        .hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+        .btn{padding:14px 32px;border-radius:10px;font-family:"Space Grotesk",sans-serif;font-size:0.95rem;font-weight:700;text-decoration:none;transition:all 0.25s;cursor:pointer;display:inline-block;letter-spacing:0.02em;}
+        .btn-primary{background:linear-gradient(135deg,var(--teal-dk),var(--teal-lt));color:var(--mint);border:none;box-shadow:0 8px 24px var(--glow);}
+        .btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 32px var(--glow);}
+        .btn-secondary{background:transparent;border:1px solid var(--border);color:var(--text2);}
+        .btn-secondary:hover{background:rgba(17,100,102,0.12);border-color:var(--teal-lt);color:var(--mint);}
+
+        /* Language pills */
+        .lang-pills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:32px;}
+        .lang-pill{padding:5px 14px;background:rgba(17,100,102,0.15);border:1px solid var(--border);border-radius:20px;font-size:0.78rem;font-weight:600;color:var(--mint-dk);display:flex;align-items:center;gap:6px;}
+        .lang-pill span{font-size:14px;}
+
+        .hero-scroll{margin-top:60px;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text3);font-size:0.78rem;letter-spacing:0.1em;}
+        .scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--teal-lt),transparent);animation:scrollDown 1.5s infinite;}
+        @keyframes scrollDown{0%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);transform-origin:top;}100%{transform:scaleY(1);transform-origin:bottom;opacity:0;}}
+
+        /* SECTIONS */
+        .section-wrap{padding:80px 40px;max-width:1100px;margin:0 auto;}
+        .section-label{font-size:0.7rem;font-weight:700;color:var(--sand);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:10px;}
+        .section-title{font-family:"Orbitron",sans-serif;font-size:1.8rem;font-weight:700;color:var(--mint);margin-bottom:12px;}
+        .section-sub{font-size:1rem;color:var(--text2);max-width:560px;line-height:1.6;margin-bottom:50px;}
+
+        /* HOW IT WORKS */
+        .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
+        .step-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;position:relative;overflow:hidden;transition:all 0.25s;}
+        .step-card:hover{border-color:var(--teal-lt);transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,0.3);}
+        .step-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal-dk),var(--teal-lt));}
+        .step-num{font-family:"Orbitron",sans-serif;font-size:2rem;font-weight:900;color:rgba(17,100,102,0.3);margin-bottom:10px;}
+        .step-icon{font-size:28px;margin-bottom:12px;}
+        .step-title{font-size:1rem;font-weight:700;color:var(--mint);margin-bottom:8px;}
+        .step-desc{font-size:0.875rem;color:var(--text2);line-height:1.6;}
+
+        /* FEATURES */
+        .features-bg{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+        .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;}
+        .feature-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:20px;transition:all 0.2s;}
+        .feature-card:hover{border-color:var(--teal-lt);background:rgba(17,100,102,0.15);}
+        .feature-icon{font-size:24px;margin-bottom:10px;}
+        .feature-title{font-size:0.95rem;font-weight:700;color:var(--mint);margin-bottom:6px;}
+        .feature-desc{font-size:0.82rem;color:var(--text2);line-height:1.6;}
+
+        /* KEYWORDS */
+        .keywords-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;}
+        .keyword-category{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;}
+        .keyword-cat-title{font-size:0.8rem;font-weight:700;color:var(--sand);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+        .keyword-chips{display:flex;flex-wrap:wrap;gap:8px;}
+        .kchip{padding:5px 12px;background:rgba(17,100,102,0.15);border:1px solid var(--border);border-radius:16px;font-size:0.78rem;color:var(--mint-dk);font-weight:500;cursor:pointer;transition:all 0.2s;}
+        .kchip:hover{background:rgba(17,100,102,0.35);border-color:var(--teal-lt);color:var(--mint);}
+
+        /* ABOUT */
+        .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;}
+        .about-text p{font-size:0.95rem;color:var(--text2);line-height:1.8;margin-bottom:16px;}
+        .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+        .astat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;}
+        .astat-val{font-family:"Orbitron",sans-serif;font-size:1.8rem;font-weight:700;color:var(--sand);margin-bottom:4px;}
+        .astat-lbl{font-size:0.75rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;}
+
+        /* CTA */
+        .cta-section{text-align:center;padding:80px 40px;background:var(--surface);border-top:1px solid var(--border);}
+        .cta-title{font-family:"Orbitron",sans-serif;font-size:1.8rem;font-weight:700;color:var(--mint);margin-bottom:16px;}
+        .cta-desc{font-size:1rem;color:var(--text2);margin-bottom:32px;}
+
+        footer{text-align:center;padding:24px;border-top:1px solid var(--border);color:var(--text3);font-size:0.8rem;}
+
+        @media(max-width:768px){
+            nav{padding:14px 20px;}
+            .nav-links .nav-link:not(.primary){display:none;}
+            .hero{padding:100px 20px 60px;}
+            .hero-name{font-size:2.2rem;}
+            .hero-icon{width:56px;height:56px;font-size:22px;}
+            .section-wrap{padding:60px 20px;}
+            .section-title{font-size:1.4rem;}
+            .about-grid{grid-template-columns:1fr;}
+        }
+    </style>
+</head>
+<body>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-brand">
+        <div class="nav-icon">G</div>
+        <div class="nav-name">Guid<span class="x">X</span></div>
+    </div>
+    <div class="nav-links">
+        <a href="#how-it-works" class="nav-link">How it works</a>
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#keywords" class="nav-link">Try it</a>
+        {% if user.is_authenticated %}
+        <a href="/chatbot/history/" class="nav-link">History</a>
+        <a href="/chatbot/" class="nav-link primary">Open GuidX</a>
+        {% else %}
+        <a href="/chatbot/login/" class="nav-link primary">Get Started</a>
+        {% endif %}
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        <div class="hero-badge-text">Gemini AI &middot; All India &middot; 5 Languages</div>
+    </div>
+    <div class="hero-brand">
+        <div class="hero-icon">G</div>
+        <div class="hero-name">Guid<span class="x">X</span></div>
+    </div>
+    <div class="hero-tagline">Career Intelligence</div>
+    <p class="hero-desc">Your intelligent AI career guide for students across India. Ask in your language — GuidX replies in Tamil, Hindi, Malayalam, Telugu or English with personalized course, college and career guidance.</p>
+
+    <div class="lang-pills">
+        <div class="lang-pill"><span>&#127988;</span> English</div>
+        <div class="lang-pill"><span>&#127470;&#127475;</span> தமிழ்</div>
+        <div class="lang-pill"><span>&#127470;&#127475;</span> हिंदी</div>
+        <div class="lang-pill"><span>&#127470;&#127475;</span> മലയാളം</div>
+        <div class="lang-pill"><span>&#127470;&#127475;</span> తెలుగు</div>
+    </div>
+
+    <div class="hero-btns">
+        {% if user.is_authenticated %}
+        <a href="/chatbot/" class="btn btn-primary">Open GuidX</a>
+        <a href="/chatbot/history/" class="btn btn-secondary">View My History</a>
+        {% else %}
+        <a href="/chatbot/login/" class="btn btn-primary">Get Started — Free</a>
+        <a href="/chatbot/" class="btn btn-secondary">Try Guest Mode</a>
+        {% endif %}
+    </div>
+    <div class="hero-scroll">
+        <span>Scroll to explore</span>
+        <div class="scroll-line"></div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+    <div class="section-wrap">
+        <div class="section-label">Process</div>
+        <div class="section-title">How GuidX Works</div>
+        <div class="section-sub">GuidX uses Google Gemini AI to understand your question in any language and give personalized career guidance instantly.</div>
+        <div class="steps">
+            <div class="step-card">
+                <div class="step-num">01</div>
+                <div class="step-icon">&#128172;</div>
+                <div class="step-title">Ask in Your Language</div>
+                <div class="step-desc">Type or speak in Tamil, Hindi, Malayalam, Telugu or English — GuidX automatically detects your language and understands your question naturally.</div>
+            </div>
+            <div class="step-card">
+                <div class="step-num">02</div>
+                <div class="step-icon">&#129504;</div>
+                <div class="step-title">AI Understands You</div>
+                <div class="step-desc">Google Gemini AI analyzes your query, detects your marks, stream and interests, and builds a personalized context just for you.</div>
+            </div>
+            <div class="step-card">
+                <div class="step-num">03</div>
+                <div class="step-icon">&#127963;</div>
+                <div class="step-title">Gemini Finds the Answer</div>
+                <div class="step-desc">The Gemini API searches its vast knowledge of Indian colleges, courses, entrance exams and careers to give you the most accurate guidance.</div>
+            </div>
+            <div class="step-card">
+                <div class="step-num">04</div>
+                <div class="step-icon">&#127891;</div>
+                <div class="step-title">Personalized Response</div>
+                <div class="step-desc">You get a detailed reply in your own language — course overview, eligibility, top colleges across India, career opportunities and higher study options.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="features-bg">
+    <div class="section-wrap">
+        <div class="section-label">Capabilities</div>
+        <div class="section-title">What GuidX Can Do</div>
+        <div class="section-sub">Everything you need to make the right career decision after 12th grade — powered by Google Gemini AI.</div>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">&#129302;</div>
+                <div class="feature-title">Gemini AI Powered</div>
+                <div class="feature-desc">Powered by Google Gemini API — gives intelligent, accurate and up-to-date responses to any career question.</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#127760;</div>
+                <div class="feature-title">5 Language Support</div>
+                <div class="feature-desc">Ask in Tamil, Hindi, Malayalam, Telugu or English — GuidX auto-detects and replies in the same language.</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#127897;</div>
+                <div class="feature-title">Voice Input & Output</div>
+                <div class="feature-desc">Speak your question using the microphone. GuidX reads the answer aloud in your selected language.</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#9881;&#65039;</div>
+                <div class="feature-title">All Engineering Courses</div>
+                <div class="feature-desc">CSE, ECE, Mechanical, Civil, EEE, AI & ML, Data Science and 30+ more B.Tech/B.E. specializations.</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#127973;</div>
+                <div class="feature-title">Medical & Allied Health</div>
+                <div class="feature-desc">MBBS, BDS, NEET courses, Nursing, Physiotherapy, Pharmacy and all Allied Health Science programs.</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#127912;</div>
+                <div class="feature-title">Arts, Science & Commerce</div>
+                <div class="feature-desc">Psychology, Journalism, Animation, CA, MBA, Law, BSc programs and 80+ more courses across all streams.</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#127979;</div>
+                <div class="feature-title">All India Colleges</div>
+                <div class="feature-desc">IITs, NITs, AIIMS, Delhi University, Anna University, VIT, SRM, Manipal and colleges across every state.</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#128197;</div>
+                <div class="feature-title">Chat History Saved</div>
+                <div class="feature-desc">All your conversations are saved and organized by date — Today, Yesterday, This Week. Review anytime.</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#9989;</div>
+                <div class="feature-title">Eligibility Checker</div>
+                <div class="feature-desc">Tell GuidX your marks or JEE/NEET score and get personalized college recommendations instantly.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SAMPLE KEYWORDS -->
+<section id="keywords">
+    <div class="section-wrap">
+        <div class="section-label">Try These</div>
+        <div class="section-title">Sample Questions to Ask</div>
+        <div class="section-sub">Ask GuidX in any language. Here are some examples — click any chip to try it.</div>
+        <div class="keywords-grid">
+            <div class="keyword-category">
+                <div class="keyword-cat-title">&#9881;&#65039; Engineering</div>
+                <div class="keyword-chips">
+                    <span class="kchip">What is CSE?</span>
+                    <span class="kchip">data science course details</span>
+                    <span class="kchip">AI ML engineer career</span>
+                    <span class="kchip">JEE preparation tips</span>
+                    <span class="kchip">NIT vs private college</span>
+                    <span class="kchip">top IIT colleges India</span>
+                </div>
+            </div>
+            <div class="keyword-category">
+                <div class="keyword-cat-title">&#127973; Medical</div>
+                <div class="keyword-chips">
+                    <span class="kchip">MBBS admission process</span>
+                    <span class="kchip">NEET preparation tips</span>
+                    <span class="kchip">medical without NEET</span>
+                    <span class="kchip">AIIMS eligibility</span>
+                    <span class="kchip">BDS or MBBS which is better</span>
+                    <span class="kchip">government medical college</span>
+                </div>
+            </div>
+            <div class="keyword-category">
+                <div class="keyword-cat-title">&#127760; Tamil / தமிழ்</div>
+                <div class="keyword-chips">
+                    <span class="kchip">இன்ஜினியரிங் பாடங்கள்</span>
+                    <span class="kchip">மருத்துவ படிப்புகள்</span>
+                    <span class="kchip">12ம் வகுப்புக்கு பிறகு கோர்ஸ்</span>
+                    <span class="kchip">சிறந்த கல்லூரிகள்</span>
+                </div>
+            </div>
+            <div class="keyword-category">
+                <div class="keyword-cat-title">&#127760; Hindi / हिंदी</div>
+                <div class="keyword-chips">
+                    <span class="kchip">इंजीनियरिंग कोर्स</span>
+                    <span class="kchip">मेडिकल कोर्स</span>
+                    <span class="kchip">12वीं के बाद क्या करें</span>
+                    <span class="kchip">सबसे अच्छे कॉलेज</span>
+                </div>
+            </div>
+            <div class="keyword-category">
+                <div class="keyword-cat-title">&#127979; Colleges</div>
+                <div class="keyword-chips">
+                    <span class="kchip">Anna University cutoff</span>
+                    <span class="kchip">VIT admission process</span>
+                    <span class="kchip">IIT Madras courses</span>
+                    <span class="kchip">SRM fees structure</span>
+                    <span class="kchip">NIT Trichy branches</span>
+                </div>
+            </div>
+            <div class="keyword-category">
+                <div class="keyword-cat-title">&#9989; Eligibility</div>
+                <div class="keyword-chips">
+                    <span class="kchip">I scored 85% which college?</span>
+                    <span class="kchip">NEET score 450 which college</span>
+                    <span class="kchip">JEE rank 5000 options</span>
+                    <span class="kchip">minimum marks for MBBS</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="features-bg">
+    <div class="section-wrap">
+        <div class="section-label">About</div>
+        <div class="section-title">About This Project</div>
+        <div class="about-grid">
+            <div class="about-text">
+                <p>GuidX is an AI-powered career guidance chatbot built for students across India who have completed their 12th grade and are deciding their next educational step.</p>
+                <p>The system uses the Google Gemini API (gemini-2.5-flash) to generate intelligent, personalized responses to any career or course question — in English, Tamil, Hindi, Malayalam, or Telugu.</p>
+                <p>Unlike static career websites, GuidX understands natural language, remembers your marks and interests within the conversation, and gives real-time personalized guidance covering colleges across all of India.</p>
+                <p>Built with Django and Python. Voice input and output supported. All conversations saved securely to your account.</p>
+            </div>
+            <div class="about-stats">
+                <div class="astat">
+                    <div class="astat-val">All</div>
+                    <div class="astat-lbl">India Coverage</div>
+                </div>
+                <div class="astat">
+                    <div class="astat-val">5</div>
+                    <div class="astat-lbl">Languages</div>
+                </div>
+                <div class="astat">
+                    <div class="astat-val">AI</div>
+                    <div class="astat-lbl">Gemini Powered</div>
+                </div>
+                <div class="astat">
+                    <div class="astat-val">24/7</div>
+                    <div class="astat-lbl">Available</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+    <div class="cta-title">Ready to Find Your Path?</div>
+    <p class="cta-desc">Join GuidX and get AI-powered career guidance in your language — completely free.</p>
+    <div class="hero-btns">
+        {% if user.is_authenticated %}
+        <a href="/chatbot/" class="btn btn-primary">Open GuidX</a>
+        {% else %}
+        <a href="/chatbot/signup/" class="btn btn-primary">Create Free Account</a>
+        <a href="/chatbot/" class="btn btn-secondary">Try Without Account</a>
+        {% endif %}
+    </div>
+</section>
+
+<footer>
+    <p>GuidX &mdash; Career Intelligence &middot; All India &middot; Powered by Google Gemini AI &middot; 2026</p>
+</footer>
+</body>
+</html>

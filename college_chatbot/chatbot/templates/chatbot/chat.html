@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GuidX · Career Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root {
+            --teal-dk: #116466;
+            --teal-md: #1a7a7c;
+            --teal-lt: #22959a;
+            --sand: #D9B08C;
+            --sand-lt: #FFCB9A;
+            --mint: #D1E8E2;
+            --mint-dk: #a8d5cc;
+            --bg: #1b2724;
+            --surface: #222e2b;
+            --surface2: #2a3835;
+            --surface3: #324340;
+            --border: rgba(17, 100, 102, 0.4);
+            --border2: rgba(209, 232, 226, 0.1);
+            --text: #D1E8E2;
+            --text2: #9bbfb9;
+            --text3: #5f8a84;
+            --glow: rgba(17, 100, 102, 0.45);
+            --glow-sand: rgba(255, 203, 154, 0.2);
+            --red: rgba(255, 95, 95, 0.8);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: 'Space Grotesk', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            height: 100vh;
+            height: 100dvh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(rgba(17, 100, 102, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(17, 100, 102, 0.05) 1px, transparent 1px);
+            background-size: 44px 44px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .blob1 {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(17, 100, 102, 0.2) 0%, transparent 70%);
+            top: -150px;
+            right: -100px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .blob2 {
+            position: fixed;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(217, 176, 140, 0.1) 0%, transparent 70%);
+            bottom: -80px;
+            left: 200px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            width: 272px;
+            min-width: 272px;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 10;
+            transition: transform 0.3s ease;
+        }
+
+        .sb-head {
+            padding: 22px 18px 18px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--teal-dk), var(--teal-lt));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 24px var(--glow);
+            flex-shrink: 0;
+        }
+
+        .brand-icon::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 203, 154, 0.25);
+            border-radius: 50%;
+        }
+
+        .brand-icon-letter {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--mint);
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .brand-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--mint);
+            letter-spacing: 0.04em;
+            line-height: 1;
+        }
+
+        .brand-name .x {
+            color: var(--sand-lt);
+            text-shadow: 0 0 16px var(--glow-sand);
+        }
+
+        .brand-sub {
+            font-size: 0.62rem;
+            color: var(--text3);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-top: 3px;
+        }
+
+        /* User badge */
+        .user-badge {
+            background: rgba(17, 100, 102, 0.15);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--teal-dk), var(--teal-lt));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--mint);
+            flex-shrink: 0;
+        }
+
+        .user-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .user-email {
+            font-size: 0.75rem;
+            color: var(--text2);
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-status {
+            font-size: 0.62rem;
+            color: var(--teal-lt);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 2px;
+        }
+
+        .online-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(17, 100, 102, 0.2);
+            border: 1px solid rgba(17, 100, 102, 0.4);
+            border-radius: 20px;
+            padding: 5px 12px;
+        }
+
+        .online-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--sand-lt);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--sand-lt);
+            animation: blink 2.5s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+                box-shadow: 0 0 8px var(--sand-lt);
+            }
+
+            50% {
+                opacity: 0.4;
+                box-shadow: none;
+            }
+        }
+
+        .online-text {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--sand);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .sb-nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: 14px 10px;
+        }
+
+        .sb-nav::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .sb-nav::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 10px;
+        }
+
+        .nav-section-title {
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            padding: 0 10px;
+            margin: 12px 0 5px;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            width: 100%;
+            padding: 8px 10px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            color: var(--text2);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.83rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover {
+            background: rgba(17, 100, 102, 0.22);
+            color: var(--mint);
+            padding-left: 14px;
+        }
+
+        .nav-icon {
+            width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            background: rgba(17, 100, 102, 0.25);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover .nav-icon {
+            background: rgba(17, 100, 102, 0.45);
+            box-shadow: 0 0 10px var(--glow);
+        }
+
+        .nav-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 8px 10px;
+        }
+
+        .sb-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            padding: 10px 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat-box {
+            background: rgba(17, 100, 102, 0.12);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 10px;
+            text-align: center;
+        }
+
+        .stat-val {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--sand);
+        }
+
+        .stat-lbl {
+            font-size: 0.6rem;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 2px;
+        }
+
+        .sb-foot {
+            padding: 10px 12px 14px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .new-session-btn {
+            width: 100%;
+            padding: 9px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text3);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+
+        .new-session-btn:hover {
+            border-color: var(--sand);
+            color: var(--sand);
+            background: rgba(217, 176, 140, 0.07);
+        }
+
+        .logout-btn {
+            display: block;
+            width: 100%;
+            padding: 9px;
+            background: transparent;
+            border: 1px solid rgba(255, 95, 95, 0.3);
+            border-radius: 8px;
+            color: rgba(255, 95, 95, 0.7);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: all 0.2s;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .logout-btn:hover {
+            border-color: rgba(255, 95, 95, 0.7);
+            color: #ff5f5f;
+            background: rgba(255, 95, 95, 0.08);
+        }
+
+        /* ── Main ── */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            z-index: 5;
+        }
+
+        .topbar {
+            display: none;
+            padding: 12px 16px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .menu-btn {
+            width: 34px;
+            height: 34px;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .menu-btn span {
+            width: 16px;
+            height: 1.5px;
+            background: var(--text2);
+            border-radius: 2px;
+        }
+
+        .topbar-brand {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--mint);
+            letter-spacing: 0.06em;
+        }
+
+        .topbar-brand .x {
+            color: var(--sand-lt);
+        }
+
+        /* Hero */
+        .hero {
+            margin: 16px 20px 0;
+            padding: 14px 18px;
+            background: linear-gradient(135deg, rgba(17, 100, 102, 0.55), rgba(34, 53, 48, 0.8));
+            border: 1px solid rgba(17, 100, 102, 0.5);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, rgba(255, 203, 154, 0.12), transparent);
+            border-radius: 50%;
+        }
+
+        .hero-x {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--sand-lt);
+            text-shadow: 0 0 24px var(--glow-sand);
+            line-height: 1;
+            flex-shrink: 0;
+            width: 44px;
+            text-align: center;
+        }
+
+        .hero-divider {
+            width: 1px;
+            height: 36px;
+            background: var(--border);
+            flex-shrink: 0;
+        }
+
+        .hero-text h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--mint);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .hero-text p {
+            font-size: 0.77rem;
+            color: var(--text2);
+            line-height: 1.5;
+        }
+
+        /* Chat */
+        #chat-box {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            scroll-behavior: smooth;
+        }
+
+        #chat-box::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        #chat-box::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 10px;
+        }
+
+        .msg-wrapper {
+            display: flex;
+            gap: 9px;
+            animation: fadeUp 0.35s cubic-bezier(0.34, 1.3, 0.64, 1) both;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(14px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .user-wrapper {
+            justify-content: flex-end;
+        }
+
+        .bot-wrapper {
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+
+        .bot-avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--teal-dk), var(--teal-lt));
+            border-radius: 9px;
+            flex-shrink: 0;
+            margin-top: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            font-weight: 900;
+            color: var(--mint);
+            box-shadow: 0 0 12px var(--glow);
+        }
+
+        .msg-col {
+            display: flex;
+            flex-direction: column;
+            max-width: 68%;
+            gap: 4px;
+        }
+
+        .msg {
+            padding: 11px 15px;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        .user-msg {
+            background: linear-gradient(135deg, var(--teal-dk), var(--teal-md));
+            color: var(--mint);
+            border-radius: 14px 3px 14px 14px;
+            border: 1px solid rgba(17, 100, 102, 0.6);
+            box-shadow: 0 4px 18px var(--glow);
+        }
+
+        .bot-msg {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 3px 14px 14px 14px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .msg-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 4px;
+        }
+
+        .speak-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--text3);
+            font-size: 0.72rem;
+            font-family: 'Space Grotesk', sans-serif;
+            padding: 3px 6px;
+            border-radius: 5px;
+            transition: all 0.2s;
+        }
+
+        .speak-btn:hover {
+            color: var(--sand);
+            background: rgba(217, 176, 140, 0.1);
+        }
+
+        .speak-btn.active {
+            color: var(--sand-lt);
+        }
+
+        /* Typing indicator */
+        #typing-indicator {
+            display: none;
+            padding: 0 20px 6px;
+            flex-shrink: 0;
+        }
+
+        .typing-wrap {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 10px 16px;
+            border-radius: 3px 14px 14px 14px;
+        }
+
+        .typing-text {
+            font-size: 0.78rem;
+            color: var(--text3);
+            font-style: italic;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .typing-dots span {
+            width: 6px;
+            height: 6px;
+            background: var(--teal-lt);
+            border-radius: 50%;
+            animation: tdot 1.3s infinite;
+        }
+
+        .typing-dots span:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        .typing-dots span:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes tdot {
+
+            0%,
+            60%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.4;
+            }
+
+            30% {
+                transform: translateY(-6px);
+                opacity: 1;
+            }
+        }
+
+        /* Voice waveform */
+        .waveform {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            padding: 0 20px 8px;
+            flex-shrink: 0;
+        }
+
+        .waveform.active {
+            display: flex;
+        }
+
+        .wave-bar {
+            width: 3px;
+            border-radius: 3px;
+            background: var(--teal-lt);
+            animation: wave 0.8s ease-in-out infinite;
+        }
+
+        .wave-bar:nth-child(1) {
+            animation-delay: 0s;
+            height: 8px;
+        }
+
+        .wave-bar:nth-child(2) {
+            animation-delay: 0.1s;
+            height: 16px;
+        }
+
+        .wave-bar:nth-child(3) {
+            animation-delay: 0.2s;
+            height: 24px;
+        }
+
+        .wave-bar:nth-child(4) {
+            animation-delay: 0.3s;
+            height: 16px;
+        }
+
+        .wave-bar:nth-child(5) {
+            animation-delay: 0.4s;
+            height: 8px;
+        }
+
+        .wave-bar:nth-child(6) {
+            animation-delay: 0.3s;
+            height: 16px;
+        }
+
+        .wave-bar:nth-child(7) {
+            animation-delay: 0.2s;
+            height: 24px;
+        }
+
+        .wave-bar:nth-child(8) {
+            animation-delay: 0.1s;
+            height: 16px;
+        }
+
+        .wave-bar:nth-child(9) {
+            animation-delay: 0s;
+            height: 8px;
+        }
+
+        @keyframes wave {
+
+            0%,
+            100% {
+                transform: scaleY(0.4);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scaleY(1);
+                opacity: 1;
+            }
+        }
+
+        .waveform-label {
+            font-size: 0.75rem;
+            color: var(--teal-lt);
+            font-weight: 600;
+            margin-left: 10px;
+            animation: pulse-text 1.5s infinite;
+        }
+
+        @keyframes pulse-text {
+
+            0%,
+            100% {
+                opacity: 0.6;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Input */
+        .input-wrap {
+            padding: 8px 20px 18px;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .input-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .lang-btns {
+            display: flex;
+            gap: 4px;
+        }
+
+        .lang-btn {
+            padding: 4px 8px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text3);
+            font-family: 'Space Grotesk', sans-serif;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .lang-btn:hover {
+            border-color: var(--teal-lt);
+            color: var(--mint);
+        }
+
+        .lang-btn.active {
+            background: rgba(17, 100, 102, 0.3);
+            border-color: var(--teal-lt);
+            color: var(--mint);
+        }
+
+        .lang-btn .flag {
+            font-size: 14px;
+        }
+
+        .toolbar-right {
+            font-size: 0.7rem;
+            color: var(--text3);
+        }
+
+        .suggestions {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 8px;
+            overflow-x: auto;
+            padding-bottom: 2px;
+        }
+
+        .suggestions::-webkit-scrollbar {
+            display: none;
+        }
+
+        .suggestions:empty {
+            margin: 0;
+        }
+
+        .chip {
+            padding: 5px 12px;
+            background: rgba(17, 100, 102, 0.18);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--mint-dk);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.18s;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .chip:hover {
+            background: rgba(17, 100, 102, 0.4);
+            border-color: var(--teal-lt);
+            color: var(--mint);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--glow);
+        }
+
+        .input-bar {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 7px 7px 7px 15px;
+            transition: all 0.2s;
+        }
+
+        .input-bar:focus-within {
+            border-color: var(--teal-lt);
+            box-shadow: 0 0 0 3px rgba(17, 100, 102, 0.18), 0 0 20px var(--glow);
+        }
+
+        #userInput {
+            flex: 1;
+            border: none;
+            background: transparent;
+            outline: none;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.88rem;
+            color: var(--text);
+        }
+
+        #userInput::placeholder {
+            color: var(--text3);
+        }
+
+        .mic-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+            color: var(--text2);
+        }
+
+        .mic-btn:hover {
+            background: rgba(17, 100, 102, 0.2);
+            border-color: var(--teal-lt);
+            color: var(--mint);
+        }
+
+        .mic-btn.recording {
+            background: rgba(255, 95, 95, 0.15);
+            border-color: #ff5f5f;
+            color: #ff5f5f;
+            animation: rec-pulse 1s infinite;
+        }
+
+        @keyframes rec-pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 95, 95, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 0 8px rgba(255, 95, 95, 0);
+            }
+        }
+
+        #sendBtn {
+            background: linear-gradient(135deg, var(--teal-dk), var(--teal-lt));
+            color: var(--mint);
+            border: none;
+            border-radius: 9px;
+            width: 38px;
+            height: 38px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+            box-shadow: 0 4px 14px var(--glow);
+        }
+
+        #sendBtn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 20px var(--glow);
+        }
+
+        #sendBtn:active {
+            transform: scale(0.95);
+        }
+
+        /* Markdown */
+        .bot-msg table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 0.84rem;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .bot-msg th {
+            background: rgba(17, 100, 102, 0.3);
+            color: var(--sand-lt);
+            font-weight: 700;
+            padding: 8px 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .bot-msg td {
+            padding: 7px 10px;
+            border-bottom: 1px solid var(--border2);
+            color: var(--text2);
+        }
+
+        .bot-msg tr:last-child td {
+            border-bottom: none;
+        }
+
+        .bot-msg tr:nth-child(even) td {
+            background: rgba(17, 100, 102, 0.08);
+        }
+
+        .bot-msg ul,
+        .bot-msg ol {
+            padding-left: 18px;
+            margin: 6px 0;
+        }
+
+        .bot-msg li {
+            margin-bottom: 4px;
+            color: var(--text2);
+        }
+
+        .bot-msg strong {
+            color: var(--mint);
+            font-weight: 700;
+        }
+
+        .bot-msg em {
+            color: var(--sand);
+        }
+
+        .bot-msg code {
+            background: rgba(17, 100, 102, 0.2);
+            color: var(--sand-lt);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+
+        .bot-msg h1,
+        .bot-msg h2,
+        .bot-msg h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--mint);
+            margin: 10px 0 5px;
+            font-size: 0.88em;
+            letter-spacing: 0.05em;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 15;
+        }
+
+        @media(max-width:768px) {
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                transform: translateX(-100%);
+                box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+                z-index: 20;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .overlay.open {
+                display: block;
+            }
+
+            .topbar {
+                display: flex;
+            }
+
+            .hero {
+                margin: 12px 12px 0;
+                padding: 12px 14px;
+            }
+
+            .hero-x {
+                font-size: 1.6rem;
+                width: 36px;
+            }
+
+            #chat-box {
+                padding: 12px 14px;
+                gap: 12px;
+            }
+
+            .msg-col {
+                max-width: 84%;
+            }
+
+            .msg {
+                font-size: 0.875rem;
+            }
+
+            .input-wrap {
+                padding: 8px 14px 16px;
+            }
+
+            .lang-btn .lang-label {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="blob1"></div>
+    <div class="blob2"></div>
+    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sb-head">
+            <div class="brand">
+                <div class="brand-icon">
+                    <div class="brand-icon-letter">G</div>
+                </div>
+                <div class="brand-info">
+                    <div class="brand-name">Guid<span class="x">X</span></div>
+                    <div class="brand-sub">Career Intelligence</div>
+                </div>
+            </div>
+            <button class="new-session-btn" onclick="startNewChat()" style="margin-bottom: 12px; border-color: var(--teal-lt); color: var(--teal-lt);">+ New Chat</button>
+            {% if user.is_authenticated %}
+            <div class="user-badge">
+                <div class="user-avatar">{{ user.email|first|upper }}</div>
+                <div class="user-info">
+                    <div class="user-email">{{ user.email }}</div>
+                    <div class="user-status">&#x2022; Active Session</div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="sb-nav">
+            {% if recent_conversations or user.is_authenticated %}
+            <div class="nav-section-title">Recent Chats</div>
+            <div id="sidebar-history" style="margin-bottom: 15px; max-height: 250px; overflow-y: auto;">
+                {% for conv in recent_conversations %}
+                <button class="nav-btn history-item {% if conv.conversation_id == current_conv_id %}active{% endif %}" 
+                        onclick="loadConversation('{{ conv.conversation_id }}')"
+                        style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; border-left: 2px solid transparent;">
+                    <div class="nav-icon" style="display:inline-flex; margin-right:5px;">&#128172;</div>
+                    {{ conv.query|truncatechars:25 }}
+                </button>
+                {% empty %}
+                <div style="font-size: 0.7rem; color: var(--text3); padding: 5px 10px;">No recent chats yet.</div>
+                {% endfor %}
+            </div>
+            <div class="nav-divider"></div>
+            {% endif %}
+            
+            <div class="nav-section-title">Explore Fields</div>
+            <button class="nav-btn" onclick="quickAsk('Build a Career in Engineering & Tech')">
+                <div class="nav-icon">&#9881;</div>Engineering & Tech
+            </button>
+            <button class="nav-btn" onclick="quickAsk('Become a Doctor or Healthcare Professional')">
+                <div class="nav-icon">&#127973;</div>Medical & Health
+            </button>
+            <button class="nav-btn" onclick="quickAsk('Explore Arts, Literature & Science')">
+                <div class="nav-icon">&#127912;</div>Arts & Science
+            </button>
+            <button class="nav-btn" onclick="quickAsk('Commerce and Business courses after 12th')">
+                <div class="nav-icon">&#128200;</div>Commerce & Business
+            </button>
+            <button class="nav-btn" onclick="quickAsk('Law courses after 12th CLAT')">
+                <div class="nav-icon">&#9878;</div>Law & Legal
+            </button>
+            <div class="nav-divider"></div>
+            <div class="nav-section-title">Quick Ask</div>
+            <button class="nav-btn" onclick="quickAsk('courses after 12th')">
+                <div class="nav-icon">&#128218;</div>Courses after 12th
+            </button>
+            <button class="nav-btn" onclick="quickAsk('JEE preparation tips')">
+                <div class="nav-icon">&#128221;</div>JEE Preparation
+            </button>
+            <button class="nav-btn" onclick="quickAsk('NEET Required Medical Courses')">
+                <div class="nav-icon">&#128138;</div>NEET Courses
+            </button>
+            <button class="nav-btn" onclick="quickAsk('top IIT NIT colleges in India')">
+                <div class="nav-icon">&#127979;</div>Top Colleges India
+            </button>
+            <button class="nav-btn" onclick="quickAsk('scholarship opportunities for students India')">
+                <div class="nav-icon">&#127941;</div>Scholarships
+            </button>
+            <button class="nav-btn" onclick="quickAsk('government jobs after engineering')">
+                <div class="nav-icon">&#127963;</div>Government Jobs
+            </button>
+        </div>
+
+        <div class="sb-stats">
+            <div class="stat-box">
+                <div class="stat-val">All</div>
+                <div class="stat-lbl">India</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val">5</div>
+                <div class="stat-lbl">Languages</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val">AI</div>
+                <div class="stat-lbl">Powered</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val">24/7</div>
+                <div class="stat-lbl">Available</div>
+            </div>
+        </div>
+
+        <div class="sb-foot">
+            <button class="new-session-btn" onclick="clearChat()">&#8635; New Session</button>
+            {% if user.is_authenticated %}
+            <a href="/chatbot/logout/" class="logout-btn">&#8594; Sign Out</a>
+            {% endif %}
+        </div>
+    </aside>
+
+    <div class="main">
+        <div class="topbar">
+            <button class="menu-btn" onclick="openSidebar()"><span></span><span></span><span></span></button>
+            <div class="topbar-brand">Guid<span class="x">X</span></div>
+        </div>
+
+        <div class="hero" id="heroBanner">
+            <div class="hero-x">X</div>
+            <div class="hero-divider"></div>
+            <div class="hero-text">
+                <h3>GuidX &middot; AI Career Intelligence &middot; All India</h3>
+                <p>Ask in Tamil, Hindi, Malayalam, Telugu or English &mdash; GuidX replies in your language.</p>
+            </div>
+        </div>
+
+        <div id="chat-box"></div>
+
+        <div id="typing-indicator">
+            <div class="typing-wrap">
+                <div class="typing-dots"><span></span><span></span><span></span></div>
+                <span class="typing-text">GuidX is thinking...</span>
+            </div>
+        </div>
+
+        <div class="waveform" id="waveform">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <span class="waveform-label">Listening...</span>
+        </div>
+
+        <div class="input-wrap">
+            <div class="input-toolbar">
+                <div class="lang-btns">
+                    <button class="lang-btn active" onclick="setLang('en-IN',this)" title="English"><span
+                            class="flag">&#127988;</span><span class="lang-label">EN</span></button>
+                    <button class="lang-btn" onclick="setLang('ta-IN',this)" title="Tamil"><span
+                            class="flag">&#127470;&#127475;</span><span class="lang-label">TA</span></button>
+                    <button class="lang-btn" onclick="setLang('hi-IN',this)" title="Hindi"><span
+                            class="flag">&#127470;&#127475;</span><span class="lang-label">HI</span></button>
+                    <button class="lang-btn" onclick="setLang('ml-IN',this)" title="Malayalam"><span
+                            class="flag">&#127470;&#127475;</span><span class="lang-label">ML</span></button>
+                    <button class="lang-btn" onclick="setLang('te-IN',this)" title="Telugu"><span
+                            class="flag">&#127470;&#127475;</span><span class="lang-label">TE</span></button>
+                </div>
+                <span class="toolbar-right" id="langLabel">English</span>
+            </div>
+            <div class="suggestions" id="suggestions"></div>
+            <div class="input-bar">
+                <input type="text" id="userInput" placeholder="Ask GuidX anything about courses, colleges, careers..."
+                    autocomplete="off" />
+                <button class="mic-btn" id="micBtn" onclick="toggleMic()" title="Voice input">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                        <line x1="12" y1="19" x2="12" y2="23" />
+                        <line x1="8" y1="23" x2="16" y2="23" />
+                    </svg>
+                </button>
+                <button id="sendBtn" onclick="sendMessage()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    const chatBox = document.getElementById("chat-box");
+    const userInput = document.getElementById("userInput");
+    const typingEl = document.getElementById("typing-indicator");
+    const suggestionsEl = document.getElementById("suggestions");
+    const heroBanner = document.getElementById("heroBanner");
+    const waveform = document.getElementById("waveform");
+    let isTyping = false, msgCount = 0;
+    let selectedLang = 'en-IN';
+    let recognition = null;
+    let synth = window.speechSynthesis;
+    let availableVoices = [];
+    if (synth) {
+        availableVoices = synth.getVoices();
+        if ('onvoiceschanged' in synth) {
+            synth.onvoiceschanged = () => {
+                availableVoices = synth.getVoices();
+                console.log('SpeechSynthesis voices updated', availableVoices.length);
+            };
+        } else if (window.speechSynthesis && window.speechSynthesis.addEventListener) {
+            window.speechSynthesis.addEventListener('voiceschanged', () => {
+                availableVoices = synth.getVoices();
+                console.log('SpeechSynthesis voices updated', availableVoices.length);
+            });
+        }
+    }
+    let isRecording = false, isSpeaking = false;
+    let currentSpeakBtn = null;
+    let currentUtterance = null;
+    let currentSpeechResolve = null;
+    let currentGroup = '';
+
+    const langNames = {'en-IN':'English','ta-IN':'Tamil','hi-IN':'Hindi','ml-IN':'Malayalam','te-IN':'Telugu'};
+
+    function setLang(lang, btn) {
+        selectedLang = lang;
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+        const lbl = document.getElementById('langLabel');
+        if (lbl) lbl.textContent = langNames[lang];
+    }
+
+    function openSidebar() {
+        document.getElementById("sidebar").classList.add("open");
+        document.getElementById("overlay").classList.add("open");
+    }
+
+    function closeSidebar() {
+        document.getElementById("sidebar").classList.remove("open");
+        document.getElementById("overlay").classList.remove("open");
+    }
+
+    function quickAsk(text) {
+        userInput.value = text;
+        closeSidebar();
+        sendMessage();
+    }
+
+    async function typeWriter(element, text) {
+        const normalized = text.replace(/\n/g, "\n");
+        const temp = document.createElement("div");
+        temp.innerHTML = marked.parse(normalized);
+        const fullText = temp.innerText;
+        let i = 0;
+        element.textContent = "";
+        return new Promise(resolve => {
+            function type() {
+                if (i < fullText.length) {
+                    element.textContent = fullText.substring(0, i + 1);
+                    i++;
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                    setTimeout(type, 8);
+                } else {
+                    element.innerHTML = marked.parse(normalized);
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                    resolve();
+                }
+            }
+            type();
+        });
+    }
+
+    function getPreferredVoice(voices) {
+        if (!voices || !voices.length) return null;
+        const langCode = selectedLang.split('-')[0];
+        return voices.find(v => v.lang === selectedLang) || voices.find(v => v.lang.startsWith(langCode)) || voices[0];
+    }
+
+    function cancelCurrentSpeech() {
+        if (synth && (synth.speaking || synth.pending)) {
+            synth.cancel();
+        }
+        if (currentUtterance) {
+            currentUtterance = null;
+        }
+        if (currentSpeechResolve) {
+            currentSpeechResolve();
+            currentSpeechResolve = null;
+        }
+        if (currentSpeakBtn) {
+            currentSpeakBtn.classList.remove('active');
+            currentSpeakBtn = null;
+        }
+        isSpeaking = false;
+    }
+
+    function speakText(text) {
+        if (!('speechSynthesis' in window)) return Promise.resolve();
+        if (!synth) synth = window.speechSynthesis;
+        const clean = text.replace(/[#*_`>~]/g, '').replace(/\n+/g, ' ').replace(/\s+/g, ' ').trim();
+        if (!clean) return Promise.resolve();
+        if (!availableVoices.length && synth) {
+            availableVoices = synth.getVoices();
+        }
+        const voiceList = availableVoices.length ? availableVoices : synth.getVoices();
+        const preferred = getPreferredVoice(voiceList);
+        console.log('TTS voice list', voiceList.map(v => `${v.lang}:${v.name}`));
+        return new Promise(resolve => {
+            currentSpeechResolve = resolve;
+            const utterance = new SpeechSynthesisUtterance(clean);
+            utterance.lang = selectedLang;
+            utterance.rate = 0.88;
+            utterance.volume = 1.0;
+            if (preferred) {
+                utterance.voice = preferred;
+                console.log('TTS selected voice', preferred.name, preferred.lang);
+            }
+            currentUtterance = utterance;
+            isSpeaking = true;
+            console.log('TTS started', { text: clean, lang: selectedLang, voice: preferred ? preferred.name : null });
+            utterance.onend = () => {
+                console.log('TTS ended');
+                isSpeaking = false;
+                currentUtterance = null;
+                if (currentSpeakBtn) {
+                    currentSpeakBtn.classList.remove('active');
+                    currentSpeakBtn = null;
+                }
+                if (currentSpeechResolve) {
+                    currentSpeechResolve();
+                    currentSpeechResolve = null;
+                }
+            };
+            utterance.onerror = (e) => {
+                console.error('TTS utterance error', e);
+                isSpeaking = false;
+                currentUtterance = null;
+                if (currentSpeakBtn) {
+                    currentSpeakBtn.classList.remove('active');
+                    currentSpeakBtn = null;
+                }
+                if (currentSpeechResolve) {
+                    currentSpeechResolve();
+                    currentSpeechResolve = null;
+                }
+            };
+            if (synth && synth.paused) synth.resume();
+            synth.speak(utterance);
+        });
+    }
+
+    async function appendMessage(text, isUser) {
+        if (msgCount === 0 && !isUser && heroBanner) heroBanner.style.display = "none";
+        msgCount++;
+        const wrapper = document.createElement("div");
+        wrapper.className = "msg-wrapper " + (isUser ? "user-wrapper" : "bot-wrapper");
+        if (!isUser) {
+            const av = document.createElement("div");
+            av.className = "bot-avatar";
+            av.textContent = "GX";
+            wrapper.appendChild(av);
+        }
+        const col = document.createElement("div");
+        col.className = "msg-col";
+        const msg = document.createElement("div");
+        msg.className = "msg " + (isUser ? "user-msg" : "bot-msg");
+        col.appendChild(msg);
+        wrapper.appendChild(col);
+        chatBox.appendChild(wrapper);
+        if (isUser) {
+            msg.textContent = text;
+            chatBox.scrollTop = chatBox.scrollHeight;
+        } else {
+            await typeWriter(msg, text);
+            const actions = document.createElement("div");
+            actions.className = "msg-actions";
+            const speakBtn = document.createElement("button");
+            speakBtn.className = "speak-btn";
+            speakBtn.type = 'button';
+            speakBtn.innerHTML = "&#128266; Speak";
+            speakBtn.addEventListener('click', async () => {
+                try {
+                    if (currentSpeakBtn === speakBtn && isSpeaking) {
+                        cancelCurrentSpeech();
+                        return;
+                    }
+                    if (isSpeaking) {
+                        cancelCurrentSpeech();
+                    }
+                    currentSpeakBtn = speakBtn;
+                    speakBtn.classList.add('active');
+                    isSpeaking = true;
+                    await speakText(text);
+                } catch (e) {
+                    console.error('Speak button error', e);
+                } finally {
+                    if (currentSpeakBtn === speakBtn) {
+                        speakBtn.classList.remove('active');
+                        currentSpeakBtn = null;
+                    }
+                    isSpeaking = false;
+                }
+            });
+            actions.appendChild(speakBtn);
+            col.appendChild(actions);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    }
+
+    function updateSuggestions(suggestions) {
+        suggestionsEl.innerHTML = "";
+        if (!suggestions || !suggestions.length) return;
+        suggestions.forEach(s => {
+            const chip = document.createElement("div");
+            chip.className = "chip";
+            chip.textContent = s;
+            chip.onclick = () => { userInput.value = s; sendMessage(); };
+            suggestionsEl.appendChild(chip);
+        });
+    }
+
+    async function sendMessage() {
+        if (isTyping) return;
+        const message = userInput.value.trim();
+        if (!message) return;
+        await appendMessage(message, true);
+        userInput.value = "";
+        isTyping = true;
+        typingEl.style.display = "block";
+        chatBox.scrollTop = chatBox.scrollHeight;
+        try {
+            const res = await fetch("/chatbot/chat/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({ message })
+            });
+            const data = await res.json();
+            typingEl.style.display = "none";
+            isTyping = false;
+            updateSuggestions(data.suggestions);
+            await appendMessage(data.reply, false);
+        } catch (err) {
+            console.error("Chat error:", err);
+            typingEl.style.display = "none";
+            isTyping = false;
+            await appendMessage("Connection error. Please try again.", false);
+        }
+    }
+
+    function clearChat() {
+        chatBox.innerHTML = "";
+        suggestionsEl.innerHTML = "";
+        msgCount = 0;
+        if (heroBanner) heroBanner.style.display = "flex";
+        appendMessage("Session reset. How can GuidX help you today?", false);
+    }
+
+    function toggleMic() {
+        if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+            alert('Voice input works in Google Chrome.');
+            return;
+        }
+        if (isRecording && recognition) { recognition.stop(); return; }
+        const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognition = new SR();
+        recognition.lang = selectedLang;
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.onstart = () => {
+            isRecording = true;
+            console.log('Voice recognition started', selectedLang);
+            const mb = document.getElementById("micBtn");
+            if (mb) mb.classList.add("recording");
+            if (waveform) waveform.classList.add("active");
+        };
+        recognition.onresult = (e) => {
+            console.log('Voice recognition result', e.results);
+            if (e.results && e.results[0] && e.results[0][0]) {
+                userInput.value = e.results[0][0].transcript;
+                sendMessage();
+            }
+        };
+        recognition.onerror = (e) => {
+            console.error('Voice recognition error', e.error || e.message || e);
+        };
+        recognition.onend = () => {
+            console.log('Voice recognition ended');
+            isRecording = false;
+            recognition = null;
+            const mb = document.getElementById("micBtn");
+            if (mb) mb.classList.remove("recording");
+            if (waveform) waveform.classList.remove("active");
+        };
+        recognition.start();
+    }
+
+    async function loadGroup(group) {
+        currentGroup = group;
+        const titleEl = document.getElementById('histGroupTitle');
+        if (titleEl) titleEl.textContent = group;
+        document.querySelectorAll('[id^="grp-"]').forEach(el => {
+            el.style.background = 'transparent';
+            el.style.borderLeft = '2px solid transparent';
+        });
+        const slug = group.toLowerCase().replace(/\s+/g, '-');
+        const grpEl = document.getElementById('grp-' + slug);
+        if (grpEl) {
+            grpEl.style.background = 'rgba(17,100,102,0.2)';
+            grpEl.style.borderLeft = '2px solid var(--teal-lt)';
+        }
+        const listEl = document.getElementById('histMsgList');
+        if (!listEl) return;
+        listEl.innerHTML = '<div style="font-size:0.78rem;color:var(--text3);padding:10px;text-align:center;">Loading...</div>';
+        try {
+            const res = await fetch('/chatbot/conversation/?group=' + encodeURIComponent(group));
+            const data = await res.json();
+            if (!data.messages || !data.messages.length) {
+                listEl.innerHTML = '<div style="font-size:0.78rem;color:var(--text3);padding:10px;text-align:center;">No chats found</div>';
+                return;
+            }
+            listEl.innerHTML = '';
+            data.messages.forEach(msg => {
+                const item = document.createElement('div');
+                item.style.cssText = 'background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:7px 12px;cursor:pointer;margin-bottom:4px;';
+                item.innerHTML = '<div style="font-size:0.8rem;color:var(--mint);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + msg.query + '</div><div style="font-size:0.65rem;color:var(--text3);margin-top:4px;">' + msg.time + '</div>';
+                item.onmouseenter = () => { item.style.borderColor = 'var(--teal-lt)'; };
+                item.onmouseleave = () => { item.style.borderColor = 'var(--border)'; };
+                item.onclick = () => loadConversation(msg.query, msg.response);
+                listEl.appendChild(item);
+            });
+        } catch(e) {
+            if (listEl) listEl.innerHTML = '<div style="font-size:0.78rem;color:var(--text3);padding:10px;">Error loading chats</div>';
+        }
+    }
+
+    function loadConversation(query, response) {
+        chatBox.innerHTML = '';
+        suggestionsEl.innerHTML = '';
+        msgCount = 1;
+        if (heroBanner) heroBanner.style.display = 'none';
+        const hp = document.getElementById('historyPanel');
+        if (hp) hp.style.display = 'none';
+        appendMessage(query, true);
+        setTimeout(() => appendMessage(response, false), 100);
+    }
+
+    userInput.addEventListener("keypress", e => {
+        if (e.key === "Enter") { e.preventDefault(); sendMessage(); }
+    });
+
+    window.addEventListener("DOMContentLoaded", () => {
+        if (synth && synth.onvoiceschanged !== undefined) {
+            synth.onvoiceschanged = () => synth.getVoices();
+        }
+        if (synth) synth.getVoices();
+        setTimeout(() => {
+            appendMessage("Hello! I am GuidX — your AI career guide for all of India. Ask me about courses, colleges, eligibility or careers after 12th grade. I speak Tamil, Hindi, Malayalam, Telugu and English!", false);
+            updateSuggestions(["Engineering courses after 12th", "Medical courses after 12th", "Top IIT NIT colleges India", "I scored 85% which college?"]);
+        }, 500);
+    });
+</script>
+</body>
+
+</html>

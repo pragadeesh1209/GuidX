@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity History · GuidX</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --teal-dk:#116466;--teal-md:#1a7a7c;--teal-lt:#22959a;
+            --sand:#D9B08C;--sand-lt:#FFCB9A;--mint:#D1E8E2;--mint-dk:#a8d5cc;
+            --bg:#1b2724;--surface:#222e2b;--surface2:#2a3835;
+            --border:rgba(17,100,102,0.4);--text:#D1E8E2;--text2:#9bbfb9;
+            --glow:rgba(17,100,102,0.45);--glow-sand:rgba(255,203,154,0.2);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+        body {
+            font-family: 'Space Grotesk', system-ui, sans-serif;
+            background: var(--bg); color: var(--text);
+            min-height: 100vh; display: flex; flex-direction: column;
+            overflow-x: hidden; position: relative;
+        }
+        body::before {
+            content: ''; position: fixed; inset: 0;
+            background-image: linear-gradient(rgba(17,100,102,0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(17,100,102,0.05) 1px, transparent 1px);
+            background-size: 44px 44px; z-index: 0;
+        }
+
+        .header {
+            padding: 20px 40px; background: var(--surface); border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100;
+        }
+        .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .brand-icon {
+            width: 32px; height: 32px;
+            background: linear-gradient(135deg, var(--teal-dk), var(--teal-lt));
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+        }
+        .brand-icon-letter { font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: 900; color: var(--mint); }
+        .brand-name { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 900; color: var(--mint); letter-spacing: 0.05em; }
+        .brand-name .x { color: var(--sand-lt); }
+
+        .user-nav { display: flex; gap: 20px; align-items: center; }
+        .nav-link { color: var(--text2); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+        .nav-link:hover { color: var(--mint); }
+
+        .container {
+            flex: 1; width: 100%; max-width: 900px; margin: 40px auto; padding: 0 20px; position: relative; z-index: 10;
+        }
+        h2 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--sand); margin-bottom: 30px; letter-spacing: 0.1em; }
+
+        .history-list { display: flex; flex-direction: column; gap: 20px; }
+        .history-item {
+            background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.2s;
+        }
+        .history-item:hover { transform: translateY(-2px); border-color: var(--teal-lt); }
+        
+        .query-box { padding: 16px 20px; background: var(--surface2); border-bottom: 1px solid var(--border); font-weight: 600; color: var(--mint); font-size: 0.95rem; }
+        .response-box { padding: 16px 20px; color: var(--text2); font-size: 0.9rem; line-height: 1.6; }
+        .timestamp { padding: 8px 20px; font-size: 0.75rem; color: var(--text3); border-top: 1px solid rgba(17,100,102,0.1); text-align: right; }
+
+        .empty-state { text-align: center; padding: 60px 20px; color: var(--text3); }
+        .empty-state i { font-size: 3rem; display: block; margin-bottom: 20px; opacity: 0.5; }
+
+        .btn-chat {
+            display: inline-block; margin-top: 20px; padding: 10px 24px; background: linear-gradient(135deg, var(--teal-dk), var(--teal-lt));
+            color: var(--mint); text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="/chatbot/home/" class="brand">
+            <div class="brand-icon"><div class="brand-icon-letter">G</div></div>
+            <div class="brand-name">Guid<span class="x">X</span></div>
+        </a>
+        <nav class="user-nav">
+            <a href="/chatbot/" class="nav-link">Chat</a>
+            <a href="/chatbot/logout/" class="nav-link">Logout</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>Activity History</h2>
+        
+        <div class="history-list">
+            {% for item in history %}
+                <div class="history-item">
+                    <div class="query-box">Q: {{ item.query }}</div>
+                    <div class="response-box">{{ item.response|linebreaks }}</div>
+                    <div class="timestamp">{{ item.timestamp|date:"M j, Y, g:i a" }}</div>
+                </div>
+            {% empty %}
+                <div class="empty-state">
+                    <p>No activity recorded yet. Start a conversation with GuidX!</p>
+                    <a href="/chatbot/" class="btn-chat">Start Chanting</a>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+</body>
+</html>

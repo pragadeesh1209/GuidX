@@ -1,0 +1,49 @@
+{
+    "extraction_defaults": {
+        "streams": {
+            "science": "Science",
+            "arts": "Arts",
+            "commerce": "Commerce"
+        },
+        "education_keywords": {
+            "12th": ["12th", "plus two", "+2", "schooling", "passed 12"],
+            "UG": ["ug", "undergraduate", "college", "degree"]
+        },
+        "supported_courses": ["mca", "mba", "b.tech", "be", "ba", "bsc", "bcom"],
+        "supported_cities": ["chennai", "coimbatore", "madurai", "trichy", "salem", "vellore"],
+        "interest_phrases": ["interested in", "want to study", "looking for", "interest in", "i like", "i love"]
+    },
+    "suggestions": {
+        "default": ["Explore Fields", "All Courses"]
+    },
+    "eligibility": {
+        "engineering": {
+            "stream": "Science (PCM)",
+            "tiers": [
+                {"min": 90, "max": 100, "label": "Excellent", "colleges": ["IIT Madras", "NIT Trichy", "Anna University"], "message": "You have an excellent score! Top colleges like IIT Madras and NIT Trichy are within reach."},
+                {"min": 75, "max": 89, "label": "Good", "colleges": ["Anna University", "PSG College", "VIT", "SRM", "SSN"], "message": "Great score! You are eligible for top private and government colleges."},
+                {"min": 60, "max": 74, "label": "Average", "colleges": ["SRM", "VIT", "Saveetha", "Panimalar", "Hindustan"], "message": "Good score! Many reputed private colleges are available for you."},
+                {"min": 50, "max": 59, "label": "Below Average", "colleges": ["Various private colleges across Tamil Nadu"], "message": "You are eligible for several private engineering colleges."},
+                {"min": 0, "max": 49, "label": "Low", "colleges": [], "message": "Your percentage is below the typical minimum of 50%. Consider improving through supplementary exams."}
+            ]
+        },
+        "medical": {
+            "stream": "Science (PCB)",
+            "tiers": [
+                {"min": 90, "max": 100, "label": "Excellent", "colleges": ["Madras Medical College", "Stanley Medical College"], "message": "Excellent score! Government medical colleges are within reach. Focus on NEET preparation."},
+                {"min": 75, "max": 89, "label": "Good", "colleges": ["Sri Ramachandra", "Chettinad Health Sciences", "SRM Medical"], "message": "Good score! Private medical colleges are well within your reach."},
+                {"min": 60, "max": 74, "label": "Average", "colleges": ["Various private medical colleges"], "message": "You meet the basic eligibility. Focus on NEET score for medical admissions."},
+                {"min": 45, "max": 59, "label": "Below Average", "colleges": ["Allied health", "Paramedical courses"], "message": "Consider Allied Health or Paramedical courses which have lower cutoffs."},
+                {"min": 0, "max": 44, "label": "Low", "colleges": [], "message": "Consider Nursing, Pharmacy or Paramedical diploma courses."}
+            ]
+        },
+        "arts": {
+            "stream": "Any Stream",
+            "tiers": [
+                {"min": 75, "max": 100, "label": "Good", "colleges": ["Loyola College", "Madras Christian College", "Stella Maris"], "message": "Great score! Top arts colleges like Loyola and MCC are accessible."},
+                {"min": 50, "max": 74, "label": "Average", "colleges": ["Various government and private arts colleges"], "message": "You are eligible for most arts and science colleges in Tamil Nadu."},
+                {"min": 0, "max": 49, "label": "Low", "colleges": ["Government arts colleges"], "message": "You are eligible for government arts colleges. Many courses accept 45% minimum."}
+            ]
+        }
+    }
+}
